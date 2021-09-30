@@ -12,6 +12,9 @@ r2_reads = file(params.r2_reads)
 reads_channel = Channel.from(r1_reads, r2_reads)
 
 process bwa_index {
+    module 'bwa/0.7.17'
+    cpus '2'
+    time '1h'
     publishDir 'bwa_index'
 
     input:
@@ -26,6 +29,10 @@ process bwa_index {
 }
 
 process fasta_index {
+    module 'samtools/1.12'
+    cpus '2'
+    time '30m'
+
     input:
     file reference from reference_file
 
@@ -36,7 +43,9 @@ process fasta_index {
 }
 
 process bwa_mem {
+    module 'bwa/0.7.17:samtools/1.12:pythonpackages/3.7.4'
     cpus 16
+    time '12h'
 
     input:
     file ref from reference_file
@@ -55,6 +64,9 @@ process bwa_mem {
 filtered_pairs = mapped.buffer(size: 2)
 
 process combine {
+    module 'samtools/1.12:pythonpackages/3.7.4'
+    cpus '2'
+    time '1h'
     publishDir 'alignments'
 
     input:
@@ -70,6 +82,9 @@ process combine {
 }
 
 process bam2bed {
+    module 'bedtools/2.28.0'
+    cpus '2'
+    time '1h'
     publishDir 'alignments'
 
     input:
@@ -84,6 +99,9 @@ process bam2bed {
 }
 
 process salsa {
+    module 'python2packages/2.7.17:salsa/v0.1'
+    cpus '4'
+    time '6h'
     publishDir 'salsa_out', mode: 'move'
 
     input:
