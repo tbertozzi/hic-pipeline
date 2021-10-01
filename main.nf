@@ -45,7 +45,7 @@ process fasta_index {
 
 process bwa_mem {
     module 'bwa/0.7.17:samtools/1.12:pythonpackages/3.7.4'
-    clusterOptions '-l ncpus 16,mem 64G'
+    clusterOptions '-l ncpus=16 -l mem=64G -l storage=gdata/xl04+scratch/xl04'
     time '12h'
 
     input:
@@ -66,7 +66,7 @@ filtered_pairs = mapped.buffer(size: 2)
 
 process combine {
     module 'samtools/1.12:pythonpackages/3.7.4'
-    clusterOptions '-l ncpus 2,mem 8G'
+    clusterOptions '-l ncpus=2 -l mem=8G -l storage=gdata/xl04+scratch/xl04'
     time '1h'
     publishDir 'alignments'
 
@@ -84,7 +84,7 @@ process combine {
 
 process bam2bed {
     module 'bedtools/2.28.0'
-    clusterOptions '-l ncpus 2,mem 8G'
+    clusterOptions '-l ncpus=2 -l mem=8G -l storage=gdata/xl04+scratch/xl04'
     time '1h'
     publishDir 'alignments'
 
@@ -101,7 +101,7 @@ process bam2bed {
 
 process salsa {
     module 'python2packages/2.7.17:salsa/v0.1'
-    clusterOptions '-l ncpus 4,mem 16G'
+    clusterOptions '-l ncpus=4 -l mem=16G -l storage=gdata/xl04+scratch/xl04'
     time '6h'
     publishDir 'salsa_out', mode: 'move'
 
