@@ -57,7 +57,7 @@ process bwa_mem {
     file 'out.bam' into mapped
 
     """
-    bwa mem -t 16 ${ref} ${reads} | samtools view -bh - | filter_chimeras.py - > out.bam
+    bwa mem -t 16 ${ref} ${reads} | samtools view -bh - | ${PBS_O_WORKDIR}/filter_chimeras.py - > out.bam
     """
 }
 
@@ -76,7 +76,7 @@ process combine {
     file 'combined.bam' into combinedbam
 
     """
-    combine_ends.py r1.bam r2.bam | samtools fixmate -m - - | samtools sort - | samtools markdup -r - combined.bam
+    ${PBS_O_WORKDIR}/combine_ends.py r1.bam r2.bam | samtools fixmate -m - - | samtools sort - | samtools markdup -r - combined.bam
     """
 }
 
