@@ -13,7 +13,7 @@ reads_channel = Channel.from(r1_reads, r2_reads)
 
 process bwa_index {
     module 'bwa/0.7.17'
-    clusterOptions '-l ncpus 2 -l mem 8G'
+    clusterOptions '-l ncpus=2 -l mem=8G -l storage=gdata/xl04+scratch/xl04'
     time '1h'
 
     publishDir 'bwa_index'
@@ -31,7 +31,7 @@ process bwa_index {
 
 process fasta_index {
     module 'samtools/1.12'
-    clusterOptions '-l ncpus 2 -l mem 8G'
+    clusterOptions '-l ncpus=2 -l mem=8G -l storage=gdata/xl04+scratch/xl04'
     time '30m'
 
     input:
