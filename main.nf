@@ -57,8 +57,7 @@ process bwa_mem {
     file 'out.bam' into mapped
 
     """
-    bwa mem -t 16 ${ref} ${reads} | samtools view -bh - | \
-        filter_chimeras.py - > out.bam
+    bwa mem -t 16 ${ref} ${reads} | samtools view -bh - | filter_chimeras.py - > out.bam
     """
 }
 
@@ -77,8 +76,7 @@ process combine {
     file 'combined.bam' into combinedbam
 
     """
-    combine_ends.py r1.bam r2.bam | samtools fixmate -m - - \
-        | samtools sort - | samtools markdup -r - combined.bam
+    combine_ends.py r1.bam r2.bam | samtools fixmate -m - - | samtools sort - | samtools markdup -r - combined.bam
     """
 }
 
@@ -114,7 +112,6 @@ process salsa {
     file 'salsa/*' into salsa_out
 
     """
-    python2 run_pipeline.py -a ref.fa -l ref.fa.fai \
-        -b combined.bed -e ${params.enzyme} -o salsa -m yes -i 10 -p yes
+    python2 run_pipeline.py -a ref.fa -l ref.fa.fai -b combined.bed -e ${params.enzyme} -o salsa -m yes -i 10 -p yes
     """
 }
