@@ -14,7 +14,7 @@ reads_channel = Channel.from(r1_reads, r2_reads)
 process bwa_index {
     module 'bwa/0.7.17'
 //    clusterOptions '-l ncpus=4 -l mem=16G -l storage=gdata/xl04+scratch/xl04 -l jobfs=20GB'
-    time '1h'
+    time '40m'
 
     publishDir 'bwa_index'
 
